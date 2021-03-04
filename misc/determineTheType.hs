@@ -28,7 +28,10 @@ r :: [a] -> [a]
 r a = tail a
 
 co :: (b -> c) -> (a -> b) -> a -> c
-co bToC aToB a = (bToC (aToB a))
+co bToC aToB a = bToC $ aToB a
 
 a :: (a -> c) -> a -> a
 a _ a = a
+
+a' :: (a -> b) -> a -> b
+a' aToB a = aToB a

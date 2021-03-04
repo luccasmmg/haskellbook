@@ -4,6 +4,7 @@ module Chapter06.DayOfTheWeek where
 
 data DayOfWeek =
   Mon | Tue | Weds | Thu | Fri | Sat | Sun
+  deriving (Ord, Show)
 
 data Date =
   Date DayOfWeek Int

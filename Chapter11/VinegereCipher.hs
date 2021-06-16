@@ -18,5 +18,18 @@ convertOneTuple (x, y)
   | otherwise = (chr $ (mod ((ord x) + n) 123) + 97)
   where n = ord y - 97
 
+decipherOneTuple :: (Char, Char) -> Char
+decipherOneTuple (x, y)
+  | x == ' ' = ' '
+  | ord x - n > 96 = (chr $ (mod (ord x) 123) - n)
+  | otherwise = (chr $ mod ((ord x) - (ord y) + 123) 122)
+  where n = ord y - 97
+
 vinegere :: [Char] -> [Char]
 vinegere word = map convertOneTuple (generateAllyString word)
+
+unVinegere :: [Char] -> [Char]
+unVinegere word = map decipherOneTuple (generateAllyString word)
+
+ciphered = vinegere "meet at dawn"
+deciphered = unVinegere (vinegere "meet at dawn")

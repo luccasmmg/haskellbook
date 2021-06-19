@@ -19,7 +19,7 @@ instance Show Puzzle where
     ++ " Guessed so far: " ++ guessed
 
 freshPuzzle :: String -> Puzzle
-freshPuzzle str = Puzzle str (map (\_ -> Nothing) str) []
+freshPuzzle str = Puzzle "test" (map (\_ -> Nothing) "test") []
 
 charInWord :: Puzzle -> Char -> Bool
 charInWord (Puzzle str _ _) el = elem el str
@@ -64,7 +64,7 @@ handleGuess puzzle guess = do
 
 gameOver :: Puzzle -> IO ()
 gameOver (Puzzle wordToGuess _ guessed) =
-  if (length guessed) > 7 then
+  if (length guessed) > (3 + (length wordToGuess)) then
     do putStrLn "You lose!"
        putStrLn $
          "The word was: " ++ wordToGuess

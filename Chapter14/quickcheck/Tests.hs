@@ -24,6 +24,9 @@ prop_plusAssociative' x y z = x * (y * z) == (x * y) * z
 prop_plusCommutative' :: Int -> Int -> Bool
 prop_plusCommutative' x y = x * y == y * x
 
+prop_Reverse :: [Int] -> Bool
+prop_Reverse x = (reverse $ reverse x) == x
+
 noZero :: Gen (Int, Int)
 noZero = do
   a <- getPositive <$> arbitrary
@@ -32,6 +35,9 @@ noZero = do
 
 prop_QuotRem :: Property
 prop_QuotRem = forAll noZero (\(x, y) -> (quot x y)*y + (rem x y) == x)
+
+prop_Show :: [Char] -> Bool
+prop_Show x = (read (show x)) == x
 
 main :: IO ()
 main = do
@@ -42,3 +48,5 @@ main = do
   quickCheck prop_plusAssociative'
   quickCheck prop_plusCommutative'
   quickCheck prop_QuotRem
+  quickCheck prop_Reverse
+  quickCheck prop_Show

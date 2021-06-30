@@ -44,3 +44,29 @@ data CountingBad a =
 
 instance Functor CountingBad where
   fmap f (Heisenberg n a) = Heisenberg (n) (f a)
+
+incMaybe :: Num a => Maybe a -> Maybe a
+incMaybe m = fmap (+1) m
+
+
+incMaybe' :: Num a => Maybe a -> Maybe a
+incMaybe' = fmap (+1)
+
+data Possibly a =
+  LolNope
+  | Yeppers a
+  deriving (Eq, Show)
+
+instance Functor Possibly where
+  fmap _ LolNope = LolNope
+  fmap f (Yeppers a) = Yeppers (f a)
+
+data Wrap f a =
+  Wrap (f a)
+  deriving (Eq, Show)
+
+instance Functor f => Functor (Wrap f) where
+  fmap f (Wrap fa) = Wrap (fmap f fa)
+
+getInt :: IO Int
+getInt = fmap read getLine

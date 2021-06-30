@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleInstances #-}}
+{-# LANGUAGE FlexibleInstances #-}
 -- | ChapterExercises.hs
 
 module Chapter16.ChapterExercises where
@@ -61,7 +61,7 @@ data List a =
 
 instance Functor List where
   fmap _ Nil = Nil
-  fmap f (Cons a (List a)) = (Cons (f a) (fmap (List a)))
+  fmap f (Cons a as) = (Cons (f a) (fmap f as))
 
 data GoatLord a =
   NoGoat
@@ -71,4 +71,14 @@ data GoatLord a =
 instance Functor GoatLord where
   fmap _ NoGoat = NoGoat
   fmap f (OneGoat a) = OneGoat (f a)
-  fmap f (MoreGoats x y z) = MoreGoats $ (fmap f x) (fmap f y) (fmap f z)
+  fmap f (MoreGoats x y z) = MoreGoats (fmap f x) (fmap f y) (fmap f z)
+
+data TalkToMe a =
+  Halt
+  | Print String a
+  | Read (String -> a)
+
+instance Functor TalkToMe where
+  fmap _ Halt = Halt
+  fmap f (Print str a) = Print str (f a)
+  fmap f (Read func) = Read $ (f . func)

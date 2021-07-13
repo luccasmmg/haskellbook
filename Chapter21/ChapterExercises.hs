@@ -2,6 +2,8 @@
 
 module Chapter21.ChapterExercises where
 
+import Test.Hspec
+
 newtype Identity a = Identity a deriving (Eq, Ord, Show)
 
 instance Functor Identity where
@@ -87,5 +89,11 @@ instance Traversable (Big a) where
 
 data Bigger a b = Bigger a b b b
 
+instance Functor (Bigger a) where
+  fmap f (Bigger a b b' b'') = Bigger a (f b) (f b') (f b'')
+
 instance Foldable (Bigger a) where
   foldMap f (Bigger _ b b' b'') = f b <> f b' <> f b''
+
+instance Traversable (Bigger a) where
+  traverse f (Bigger a b b' b'') = Bigger a <$> (f b) <*> (f b') <*> (f b'')

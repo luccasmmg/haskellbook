@@ -33,7 +33,7 @@ instance Traversable n => Traversable (S n) where
 data Tree a =
   Empty
   | Leaf a
-  | Node (Tree a) a (Tree a)
+  | Node (Tree a) a (Tree a) deriving (Eq, Show)
 
 instance Functor Tree where
   fmap _ Empty = Empty
